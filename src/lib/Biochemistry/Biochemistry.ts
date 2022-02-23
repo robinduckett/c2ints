@@ -7,7 +7,7 @@ import { Decay } from "./Decay";
 import { Organ, OrganArchive, organDeserializer } from "./Organ";
 import { DEFAULT_HEART_RATE } from "./typedefs";
 
-interface BiochemistryArchive extends Archive {
+export interface BiochemistryArchive extends Archive {
   atp_requirement: number;
   owner: number | null;
   chemicals: (ChemicalArchive | Archive)[];
@@ -31,14 +31,20 @@ export class Biochemistry implements PersistentObject {
   private heart_organs: number[];
   private heart_rate: number;
 
-  constructor() {
+  constructor(owner?: Creature) {
     this.atp_requirement = 0.0;
-    this.owner = null;
+
     this.chemicals = [];
     this.organs = [];
 
     this.heart_organs = [];
     this.heart_rate = DEFAULT_HEART_RATE;
+
+    if (owner) {
+      this.owner = owner;
+    } else {
+      this.owner = null;
+    }
   }
 
   update(biotick: number) {
