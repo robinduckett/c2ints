@@ -5,3 +5,7 @@ export function bound(
 ): number {
   return bounded_value > upper ? upper : bounded_value < lower ? lower : bounded_value
 }
+
+export function mod(n: number, m: number) {
+  return ((n % m) + m) % m;
+}

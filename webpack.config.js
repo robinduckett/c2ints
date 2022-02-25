@@ -8,7 +8,7 @@ module.exports = {
   entry: './src/index.ts',
   mode: 'development',
   // Necessary in order to use source maps and debug directly TypeScript files
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       // Necessary in order to use TypeScript
@@ -33,12 +33,15 @@ module.exports = {
   },
   plugins: [
     // No need to write a index.html
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      hash: true,
+    }),
     // Do not accumulate files in ./dist
     new CleanWebpackPlugin(),
     // Copy assets to serve them
     new CopyPlugin({
-      patterns: [{ from: 'assets', to: 'assets' }]
+      patterns: [{ from: 'assets/c2ints/' }]
     }),
   ],
   devServer: {
@@ -47,5 +50,14 @@ module.exports = {
     port: 3000,
     // Hot-reloading, the sole reason to use webpack here <3
     hot: true,
+    compress: true,
+    static: ['dist'],
+    devMiddleware: {
+      index: false,
+      mimeTypes: { phtml: 'text/html' },
+      publicPath: '/public',
+      serverSideRender: true,
+      writeToDisk: true,
+    },
   },
 };
