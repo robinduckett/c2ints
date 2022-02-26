@@ -3,3 +3,4 @@ node_modules
 assets/c2ints/images
 dist
 tools2
+.DS_Store

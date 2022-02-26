@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
     // DO NOT EDIT
-    "moduleResolution": "node",
-    "esModuleInterop": true,
     "outDir": "./dist",
     "target": "es6",
     "module": "CommonJS",
     "sourceMap": true,
-    // Set your preferences here for TypeScript
     "strict": true,
     "types": [],
-    "lib": ["ESNext", "DOM"]
-  }
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    // Set your preferences here for TypeScript
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    "jsx": "react-jsx",
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.d.ts", "**/*.tsx"],
 }

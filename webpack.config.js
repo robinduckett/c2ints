@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // Basic configuration
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   mode: 'development',
   // Necessary in order to use source maps and debug directly TypeScript files
   devtool: 'eval-source-map',
@@ -13,16 +13,32 @@ module.exports = {
     rules: [
       // Necessary in order to use TypeScript
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.s?[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require("sass"),
+              sassOptions: {
+                fiber: false,
+              },
+            }
+          }
+        ]
+      }
     ],
   },
   resolve: {
     // Alway keep '.js' even though you don't use it.
     // https://github.com/webpack/webpack-dev-server/issues/720#issuecomment-268470989
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   output: {
     filename: 'bundle.js',
@@ -34,7 +50,7 @@ module.exports = {
   plugins: [
     // No need to write a index.html
     new HtmlWebpackPlugin({
-      template: "src/index.html",
+      template: 'src/index.html',
       hash: true,
     }),
     // Do not accumulate files in ./dist

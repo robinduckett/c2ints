@@ -5,28 +5,44 @@
   "description": "Typescript Implementation of Creatures 2",
   "author": "Haxd",
   "dependencies": {
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@fontsource/roboto": "^4.5.3",
+    "@mui/icons-material": "^5.4.2",
+    "@mui/material": "^5.4.3",
+    "@mui/system": "^5.4.3",
     "@pixi/constants": "^6.2.2",
     "@pixi/core": "^6.2.2",
     "@pixi/display": "^6.2.2",
+    "@pixi/graphics": "^6.2.2",
     "@pixi/interaction": "^6.2.2",
     "@pixi/math": "^6.2.2",
     "@pixi/runner": "^6.2.2",
     "@pixi/settings": "^6.2.2",
+    "@pixi/sprite": "^6.2.2",
     "@pixi/ticker": "^6.2.2",
     "@pixi/tilemap": "^3.2.2",
     "@pixi/utils": "^6.2.2",
-    "@types/jbinary": "^2.1.1",
-    "@types/jdataview": "^0.0.31",
+    "css-loader": "^6.6.0",
     "jbinary": "^2.1.5",
     "jdataview": "^2.5.0",
     "pixi-viewport": "^4.34.4",
-    "pixi.js": "^6.2.2"
+    "pixi.js": "^6.2.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^3.3.1"
   },
   "devDependencies": {
+    "@types/jbinary": "^2.1.1",
+    "@types/jdataview": "^0.0.31",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.4",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.5.1",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.5",
     "webpack": "^5.69.1",
@@ -34,6 +50,6 @@
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {
-    "dev": "webpack-dev-server"
+    "dev": "webpack serve --mode development"
   }
 }
