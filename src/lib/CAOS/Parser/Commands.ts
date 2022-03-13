@@ -25,8 +25,8 @@ export default {
   ),
 
   SCRP: (r: any) => seq(
-    string('scrp'),
-    seq(r._, r.Number).times(4)
+    string('scrp').skip(r._),
+    seq(r.Number.trim(r._)).times(4)
   ),
 
   DBGM: (r: any) => seq(
