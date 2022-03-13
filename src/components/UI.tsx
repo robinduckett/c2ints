@@ -81,7 +81,7 @@ export function UI() {
       keepMounted: true, // Better open performance on mobile.
     }}
     sx={{
-      '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+      '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 600 },
     }}>
     <DrawerContents />
   </Drawer>

@@ -11,7 +11,7 @@ export default {
   Condition: () => regexp(/eq|ne|gt|lt|ge|le|bt|bf/),
   Expression: (r: any) => r.Command.trim(r._),
   Block: (r: any) => r.Expression.skip(r.Comma).atLeast(1).trim(r._),
-  Script: (r: any) => seq(r.Block,string('endm').skip(r.Comma).trim(r._)),
+  Script: (r: any) => seq(r.Block, string('endm').trim(r._)),
   Comma: () => string(','),
   _: () => optWhitespace,
 };
