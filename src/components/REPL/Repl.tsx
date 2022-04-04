@@ -1,18 +1,29 @@
 import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import { KeyboardEvent, useCallback, useEffect, useState } from 'react';
-import { tryParse } from '../../lib/CAOS/Parser';
+import { parseExpression } from '../../lib/CAOS/Parser';
 import { LogWindow } from './LogWindow';
+
+const RELEASE_VERSION = '0.0.1-alpha';
 
 interface ConsoleOpts {
   error?: boolean;
 }
 
 export function Repl() {
-  const [logMessages, setLog] = useState<string[]>([]);
+  const [logMessages, setLog] = useState<string[]>(
+    JSON.parse(
+      localStorage.getItem('repl_messages') ?? '[]'
+    ) ?? []
+  );
 
   const consoleLog = (msg: string, options?: ConsoleOpts) => {
-    setLog(prevLog => ([...prevLog, ...[`${options?.error ? 'e:' : ''}${msg}`]]));
+    
+    setLog(prevLog => {
+      const result = [...prevLog, ...[`${options?.error ? 'e:' : ''}${msg}`]];
+      localStorage.setItem('repl_messages', JSON.stringify(result));
+      return result;
+    });
   };
 
   const checkReturn = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
@@ -20,9 +31,30 @@ export function Repl() {
       try {
         const cmd = (e.target as HTMLInputElement).value;
 
+        if (cmd.startsWith('?')) {
+          switch(cmd) {
+            case "?clear":
+              setLog(() => ([]));
+              localStorage.removeItem('repl_messages');
+              break;
+            case "?version":
+              consoleLog(`| Creatures 2 in Typescript Version ${RELEASE_VERSION}`)
+              break;
+            case "?about":
+            case "?":
+            default:
+              consoleLog(`| Creatures 2 in Typescript Version ${RELEASE_VERSION}`)
+              consoleLog(`| A labour of love, by Robin Duckett`);
+              break;
+          }
+
+          (e.target as HTMLInputElement).value = '';
+          return;
+        }
+
         consoleLog(`> ${cmd}`);
 
-        const result = tryParse(cmd);
+        const result = parseExpression(cmd);
 
         (e.target as HTMLInputElement).value = '';
 
@@ -45,8 +77,10 @@ export function Repl() {
   }, []);
 
   useEffect(() => {
-    consoleLog('> Welcome to the house of fun');
-    consoleLog('# ' + (new Date()).toISOString());
+    if (logMessages.length === 0) {
+      consoleLog('> Welcome to the house of fun');
+      consoleLog('# ' + (new Date()).toISOString());
+    }
   }, []);
 
   return (

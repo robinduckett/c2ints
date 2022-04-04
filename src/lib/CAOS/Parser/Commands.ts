@@ -21,12 +21,16 @@ export default {
     r.WAIT,
     r.MATE,
     r.DONE,
+    r.SUBR,
+    r.GSUB,
+    r.RETN,
+    r.REPS,
     r.STOP
   ),
 
   SCRP: (r: any) => seq(
     string('scrp').skip(r._),
-    seq(r.Number.trim(r._)).times(4)
+    r.Number.trim(r._).times(4)
   ),
 
   DBGM: (r: any) => seq(
@@ -93,5 +97,8 @@ export default {
   
   DOIF_STR: () => string('doif'),
   ELSE: () => string('else'),
-  ENDI: () => string('endi')
+  ENDI: () => string('endi'),
+
+  REPS_STR: () => string('reps'),
+  REPE: () => string('repe'),
 };

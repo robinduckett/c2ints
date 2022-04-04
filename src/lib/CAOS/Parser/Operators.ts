@@ -1,7 +1,7 @@
-import { alt, seqObj } from "parsimmon";
+import { alt, seq, seqObj, string } from "parsimmon";
 
 export default (CAOS: any, depth: number = 0) => ({
-  DOIF_ENDI: (r: any) => seqObj<any>(
+  DOIF_ENDI: (r: any) => seqObj(
     r.DOIF_STR,
     r._,
     ['lvalue', r.Value.skip(r._)],
@@ -11,7 +11,7 @@ export default (CAOS: any, depth: number = 0) => ({
     ['ifblock', CAOS(depth + 1).Block.skip(r.ENDI)]
   ),
 
-  DOIF_ELSE: (r: any) => seqObj<any>(
+  DOIF_ELSE: (r: any) => seqObj(
     r.DOIF_STR,
     r._,
     ['lvalue', r.Value.skip(r._)],
@@ -27,4 +27,23 @@ export default (CAOS: any, depth: number = 0) => ({
     r.DOIF_ELSE,
     r.DOIF_ENDI
   ).map((a: any) => ['doif', { depth: depth, ...a}]),
+
+  SUBR: (r: any) => seq(
+    string('subr').skip(r._),
+    r.Label
+  ),
+
+  GSUB: (r: any) => seq(
+    string('gsub').skip(r._),
+    r.Label
+  ),
+
+  RETN: (r: any) => string('retn'),
+
+  REPS: (r: any) => seqObj(
+    r.REPS_STR.skip(r._),
+    ['iterationCount', r.Integer],
+    r.Comma,
+    ['loop', CAOS(depth + 1).Block.skip(r.REPE)]
+  ).map((a: any) => ['reps', { depth: depth, ...a}]),
 });

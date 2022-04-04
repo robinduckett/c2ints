@@ -6,7 +6,7 @@ export class App {
 
   private lastTrigger: number;
   private interval: number;
-  private timeout: number;
+  private timeout: number | NodeJS.Timeout;
 
   private view: HTMLCanvasElement;
 
@@ -69,7 +69,7 @@ export class App {
     }
 
     if (this.timeout != 0) {
-      clearTimeout(this.timeout);
+      clearTimeout(this.timeout as number);
       this.timeout = 0;
     }
 

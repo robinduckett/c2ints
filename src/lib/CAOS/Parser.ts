@@ -1,7 +1,8 @@
 import {
   createLanguage,
-  Language,
 } from 'parsimmon';
+
+type Language = any;
 
 import Commands from './Parser/Commands';
 import Expressions from './Parser/Expressions';
@@ -17,9 +18,13 @@ const CAOS: DepthTrackedLanguage = (depth: number = 0) => createLanguage({
   ...Operators(CAOS, depth)
 });
 
-export const tryParse = (script: string) => {
-  return CAOS().Expression.tryParse(script);
+const caosLang = CAOS();
+
+export const parseExpression = (script: string) => {
+  return caosLang.Expression.tryParse(script);
 };
+
+export const Parser = caosLang.Script;
 
 // const result = tryParse`
 // targ _it_,
