@@ -35,7 +35,7 @@ function DrawerContents() {
         </Typography>
       </AccordionDetails>
     </Accordion>
-    <Accordion>
+    <Accordion expanded>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel2a-content"
@@ -53,9 +53,10 @@ function DrawerContents() {
 }
 
 export function UI() {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(localStorage.getItem('opened') === 'true');
 
   function handleDrawerToggle() {
+    localStorage.setItem('opened', (isOpened === true ? false : true).toString());
     setIsOpened(isOpened === true ? false : true);
   }
 
